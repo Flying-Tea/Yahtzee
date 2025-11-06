@@ -15,7 +15,35 @@ class Yahtzee
     }
     private void DisplayRules()
     {
-        Console.WriteLine();
+        Console.WriteLine("Welcome to Yahtzee, in this game you will roll 5 dices");
+        thread.sleep(500);
+        Console.WriteLine("With those 5 dices you try to aqcuire the highest score possible");
+        Console.WriteLine("");
+        thread.sleep(500);
+        Console.WriteLine("YOu will have 3 re rolls, you're able to pick up whatever dice you want");
+        thread.sleep(500);
+        Console.WriteLine("But once a dice is picked up, it cannot be re rolled, choose wisely");
+        Console.WriteLine("");
+        thread.sleep(500);
+        Console.WriteLine("This game consists of 13 rounds, or until theres no more options to be chosen");
+        thread.sleep(1500);
+        console.WriteLine("Scoring in this game is a bit challenging")
+        thread.sleep(500);
+        console.WriteLine("3 Of a kind: Get three dices with the same number, scores the sum of the dice");
+        thread.sleep(500);
+        console.WriteLine("4 Of a kind: Get four dices with the same number, scores the sum of the dice");
+        thread.sleep(500);
+        console.WriteLine("Full house: Get three dices with the same number and a pair (2 of the same), scores 25");
+        thread.sleep(500);
+        console.WriteLine("Small Straight: Get four sequential dice. Scores 30 points.");
+        thread.sleep(500);
+        console.WriteLine("Large Straight: Get five sequential dice. Scores 40 points.");
+        thread.sleep(500);
+        console.WriteLine("Chance: You can put anything into chance. Scores the sum of the dice.");
+        thread.sleep(500);
+        console.WriteLine("YAHTZEE: Five of a kind. Scores 50 points. Each additional Yahtzee scores 100 extra points."); 
+        
+
     }
     private void Scorecard()
     {
