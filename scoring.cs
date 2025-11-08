@@ -1,4 +1,7 @@
-class Scoring(){
+//Dice dice = new Dice();
+
+class Scoring()
+{
 
     private bool one = false;
     private bool two = false;
@@ -19,6 +22,8 @@ class Scoring(){
     private int[] dummy = new int[5];
 
 
+    //-----------------------------------------------
+    //upper
     public bool GetOne()
     {
         for (int i = 0; i <= dummy.Length - 1; i++)
@@ -113,19 +118,136 @@ class Scoring(){
     //-----------------------------------------------
     //lower 
 
-    public bool GetTK() //three of a kind
+    public bool GetTK()
     {
-        for (int i = 0; i <= dummy.Length - 1; i++)
+        int[] counts = new int[7]; // num on die
+
+        // Count occurrences of each die face
+        for (int i = 0; i < dummy.Length; i++)
         {
-            if (dummy[i] == 6)
+            counts[dummy[i]]++;
+        }
+
+        // Check if any number appears 3 or more times
+        for (int i = 1; i <= 6; i++)
+        {
+            if (counts[i] >= 3)
             {
-                if (tKind == false)
-                {
-                    tKind = true;
-                    return tKind;
-                }
+                tKind = true;
+                return tkind;
             }
         }
+
         return false;
     }
+    public bool GetFK()
+    {
+        int[] counts = new int[7]; // num on die
+
+        // Count occurrences of each die face
+        for (int i = 0; i < dummy.Length; i++)
+        {
+            counts[dummy[i]]++;
+        }
+
+        // Check if any number appears 4 or more times
+        for (int i = 1; i <= 6; i++)
+        {
+            if (counts[i] >= 4)
+            {
+                fKind = true;
+                return fkind;
+            }
+        }
+
+        return false;
+    }
+    public bool GetFH()
+    {
+        int[] counts = new int[7]; // num on die
+        bool hasThree = false;
+        bool hasTwo = false;
+
+        // Count occurrences of each die face
+        for (int i = 0; i < dummy.Length; i++)
+        {
+            counts[dummy[i]]++;
+        }
+
+        // Check for three of a kind and a pair
+        for (int i = 1; i <= 6; i++)
+        {
+            if (counts[i] == 3)
+            {
+                hasThree = true;
+            }
+            else if (counts[i] == 2)
+            {
+                hasTwo = true;
+            }
+        }
+
+        if (hasThree && hasTwo)
+        {
+            fHouse = true;
+            return fhouse;
+        }
+
+        return false;
+    }
+
+
+    //small straight get jackson's help
+    public bool GetSS()
+    {
+        HashSet<int> uniqueValues = new HashSet<int>(dummy);
+        int[] straights = { 1, 2, 3, 4, 5 };
+
+        foreach (int num in straights)
+        {
+            if (!uniqueValues.Contains(num))
+            {
+                smStraight = true;
+                return smStraight;
+            }
+        }
+
+        return false;
+    }
+    //large straight get jackson's help
+    public bool GetLS()
+    {
+        HashSet<int> uniqueValues = new HashSet<int>(dummy);
+        int[] straights = { 2, 3, 4, 5, 6 };
+
+        foreach (int num in straights)
+        {
+            if (!uniqueValues.Contains(num))
+            {
+                lgStraight = true;
+                return lgStraight;
+            }
+        }
+
+        return false;
+    }
+    public bool GetYahtzee()
+    {
+        int firstValue = dummy[0];
+        for (int i = 1; i < dummy.Length; i++)
+        {
+            if (dummy[i] != firstValue)
+            {
+                yahtzee = true;
+                return yahtzee;
+            }
+        }
+        return true;
+    }
+    public bool GetChance()
+    {
+        chance = true;
+        return chance;
+    }
 }
+    
