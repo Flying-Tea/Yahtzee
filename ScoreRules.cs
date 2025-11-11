@@ -33,47 +33,84 @@ class ScoreRules()
 
     // Upper -----------------------------------------------
 
-    private bool ScoreUpper(int upperValue)
+    private bool IsUpperValid(int upperValue)
     {
         int upperIndex = upperValue - 1;
         int[] counts = GetCount(dummy);
         if (upperUsed[upperIndex]) return false; // Used
+        if (counts[upperIndex] > 0) return true; // Checks if respective count is > 0
+        return false;
+    }
 
-        if (counts[upperIndex] > 0)
+    private bool UseUpper(int upperValue) // Use respective value when called
+    {
+        if (IsUpperValid(upperValue))
         {
-            upperUsed[upperIndex] = true; // Mark as scored
+            int upperIndex = upperValue - 1;
+            upperUsed[upperIndex] = true;
             return true;
         }
         return false;
     }
-    public bool GetOne() => ScoreUpper(1);
-    public bool GetTwo() => ScoreUpper(2);
-    public bool GetThree() => ScoreUpper(3);
-    public bool GetFour() => ScoreUpper(4);
-    public bool GetFive() => ScoreUpper(5);
-    public bool GetSix() => ScoreUpper(6);
 
+    public bool UseOne() => UseUpper(1);
+    public bool UseTwo() => UseUpper(2);
+    public bool UseThree() => UseUpper(3);
+    public bool UseFour() => UseUpper(4);
+    public bool UseFive() => UseUpper(5);
+    public bool UseSix() => UseUpper(6);
 
     // Lower -----------------------------------------------
 
-    public bool GetTK()
+    private bool HasStraight(int straightLength)
+    {
+        int[] counts = GetCount(dummy);
+        int consecutive = 0;
+        for (int i = 0; i < counts.Length; i++)
+        {
+            if (counts[i] > 0) // Checks each consecutive number of rolls is greater than 0 otherwise reset consecutive to 0
+            {
+                consecutive++;
+                if (consecutive >= straightLength)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                consecutive = 0;
+            }
+        }
+        return false;
+    }
+
+    private bool IsTKValid() // Four of a Kind -------
     {
         if (usedTK) return false;
         int[] counts = GetCount(dummy); // Count each die face
 
         for (int i = 0; i < counts.Length; i++)
         {
-            // Check if any number appears 3 or more times
+            // Check if any number appears 4 or more times
             if (counts[i] >= 3)
             {
-                usedTK = true;
-                return usedTK;
+                return true;
             }
         }
         return false;
     }
 
-    public bool GetFK()
+    public bool UseTK()
+    {
+        if (IsTKValid())
+        {
+            usedTK = true;
+            return true;
+        }
+        return false;
+    }
+
+    private bool IsFKValid() // Four of a Kind -------
     {
         if (usedFK) return false;
         int[] counts = GetCount(dummy); // Count each die face
@@ -83,28 +120,33 @@ class ScoreRules()
             // Check if any number appears 4 or more times
             if (counts[i] >= 4)
             {
-                usedFK = true;
-                return usedFK;
+                return true;
             }
         }
         return false;
     }
-    public bool GetFH()
+
+    public bool UseFK()
     {
-        int[] counts = new int[7]; // num on die
+        if (IsFKValid())
+        {
+            usedFK = true;
+            return true;
+        }
+        return false;
+    }
+
+    private bool IsFHValid() // Full House -------
+    {
+        if (usedFH) return false;
+        int[] counts = GetCount(dummy); // num on die
         bool hasThree = false;
         bool hasTwo = false;
 
         // Count each die face
-        for (int i = 0; i < dummy.Length; i++)
+        for (int i = 0; i < counts.Length; i++)
         {
-            counts[dummy[i]]++;
-        }
-
-        // Check for three of a kind and a pair
-        for (int i = 1; i <= 6; i++)
-        {
-            if (counts[i] == 3)
+            if (counts[i] == 3) // Check for three of a kind and a pair
             {
                 hasThree = true;
             }
@@ -113,95 +155,85 @@ class ScoreRules()
                 hasTwo = true;
             }
         }
+        return hasThree && hasTwo;
+    }
 
-        if (hasThree && hasTwo)
+    public bool UseFH()
+    {
+        if (IsFHValid())
         {
             usedFH = true;
-            return usedFH;
+            return true;
         }
-
         return false;
     }
 
-
-    public bool GetSS()
+    private bool IsSSValid() // Small Straight -------
     {
-        int[] straights = { 1, 2, 3, 4, 5 };
+        return (!usedSS) && HasStraight(4);
+    }
 
-        
-        for (int i = 0; i < straights.Length; i++)
+    public bool UseSS()
+    {
+        if (IsSSValid())
         {
-            bool found = false;
-
-            // Check if num exists in array
-            for (int j = 0; j < dummy.Length; j++)
-            {
-                if (dummy[j] == straights[i])
-                {
-                    found = true;
-                    break;
-                }
-            }
-
-            // checks if num in the straight is missing
-            if (!found)
-            {
-                usedSS = true;
-                return usedSS;
-            }
+            usedSS = true;
+            return true;
         }
-
         return false;
     }
 
-    public bool GetLS()
-{
-    int[] straights = { 2, 3, 4, 5, 6 };
-
-    // checks all nums
-    for (int i = 0; i < straights.Length; i++)
+    private bool IsLSValid() // Large Straight -------
     {
-        bool found = false;
+        return (!usedLS) && HasStraight(5);
+    }
 
-        // Check if num exists in array
-        for (int j = 0; j < dummy.Length; j++)
-        {
-            if (dummy[j] == straights[i])
-            {
-                found = true;
-                break;
-            }
-        }
-
-        // checks if a num is missing
-        if (!found)
+    public bool UseLS()
+    {
+        if (IsLSValid())
         {
             usedLS = true;
-            return usedLS;
+            return true;
         }
+        return false;
     }
 
-
-    return false;
-}
-    public bool GetYahtzee()
+    private bool IsYahtzeeValid()  // Yahtzee -------
     {
         if (usedYahtzee) return false;
-        int firstValue = dummy[0];
+        int first = dummy[0];
         for (int i = 1; i < dummy.Length; i++)
         {
-            if (dummy[i] != firstValue)
+            if (dummy[i] != first) 
             {
                 return false;
             }
         }
-        usedYahtzee = true;
         return true;
     }
-    public bool GetChance()
+
+    public bool UseYahtzee()
     {
-        usedChance = true;
-        return usedChance;
+        if (IsYahtzeeValid())
+        {
+            usedYahtzee = true;
+            return true;
+        }
+        return false;
+    }
+    private bool IsChanceAvailable() //  Chance -------
+    {
+        return !usedChance;
+    }
+
+    public bool UseChance()
+    {
+        if (IsChanceAvailable())
+        {
+            usedChance = true;
+            return true;
+        }
+        return false;
     }
 }
     
