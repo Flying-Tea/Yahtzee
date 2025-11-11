@@ -1,0 +1,15 @@
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\bin\Debug\net9.0\Yahtzee.exe
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\bin\Debug\net9.0\Yahtzee.deps.json
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\bin\Debug\net9.0\Yahtzee.runtimeconfig.json
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\bin\Debug\net9.0\Yahtzee.dll
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\bin\Debug\net9.0\Yahtzee.pdb
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\obj\Debug\net9.0\Yahtzee.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\obj\Debug\net9.0\Yahtzee.AssemblyInfoInputs.cache
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\obj\Debug\net9.0\Yahtzee.AssemblyInfo.cs
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\obj\Debug\net9.0\Yahtzee.csproj.CoreCompileInputs.cache
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\obj\Debug\net9.0\Yahtzee.sourcelink.json
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\obj\Debug\net9.0\Yahtzee.dll
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\obj\Debug\net9.0\refint\Yahtzee.dll
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\obj\Debug\net9.0\Yahtzee.pdb
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\obj\Debug\net9.0\Yahtzee.genruntimeconfig.cache
+C:\Users\Matt6510\Documents\GitHub\Yahtzee\obj\Debug\net9.0\ref\Yahtzee.dll
