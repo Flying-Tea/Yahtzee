@@ -11,14 +11,20 @@ class ScoreRules()
     private bool usedLS = false;
     private bool usedYahtzee = false;
     private bool usedChance = false;
-    private int scoring = 0;
+    public bool GetIsTKUsed() => usedTK;
+    public bool GetIsFKUsed() => usedFK;
+    public bool GetIsFHUsed() => usedFH;
+    public bool GetIsSSUsed() => usedSS;
+    public bool GetIsLSUsed() => usedLS;
+    public bool GetIsYahtzeeUsed() => usedYahtzee;
+    public bool GetIsChanceUsed() => usedChance;
 
-    private int[] dummy = new int[5]; // Dummy holding dice array
+    private int[] holdingDice = new int[5]; // holdingDice holding dice array
     private bool[] upperUsed = new bool[6]; // Marks whether respective upper is used
 
-    public void DisplayAvaliableScoring()
+    public void SetDice(int[] holdingDice)
     {
-        
+        this.holdingDice = holdingDice;
     }
 
     private static int[] GetCount(int[] holdingDice) // Counts the number of times a number appears
@@ -33,10 +39,10 @@ class ScoreRules()
 
     // Upper -----------------------------------------------
 
-    private bool IsUpperValid(int upperValue)
+    public bool IsUpperValid(int upperValue)
     {
         int upperIndex = upperValue - 1;
-        int[] counts = GetCount(dummy);
+        int[] counts = GetCount(holdingDice);
         if (upperUsed[upperIndex]) return false; // Used
         if (counts[upperIndex] > 0) return true; // Checks if respective count is > 0
         return false;
@@ -46,12 +52,17 @@ class ScoreRules()
     {
         if (IsUpperValid(upperValue))
         {
-            int upperIndex = upperValue - 1;
-            upperUsed[upperIndex] = true;
+            upperUsed[upperValue - 1] = true;
             return true;
         }
         return false;
     }
+    public int PreviewPointsUpper(int upperValue) // Respective Points for Upper
+    {
+        int[] counts = GetCount(holdingDice);
+        return counts[upperValue - 1] * upperValue; // If outputs 0 that means that choice is invalid
+    }
+
 
     public bool UseOne() => UseUpper(1);
     public bool UseTwo() => UseUpper(2);
@@ -64,7 +75,7 @@ class ScoreRules()
 
     private bool HasStraight(int straightLength)
     {
-        int[] counts = GetCount(dummy);
+        int[] counts = GetCount(holdingDice);
         int consecutive = 0;
         for (int i = 0; i < counts.Length; i++)
         {
@@ -84,10 +95,10 @@ class ScoreRules()
         return false;
     }
 
-    private bool IsTKValid() // Four of a Kind -------
+    public bool IsTKValid() // Four of a Kind -------
     {
         if (usedTK) return false;
-        int[] counts = GetCount(dummy); // Count each die face
+        int[] counts = GetCount(holdingDice); // Count each die face
 
         for (int i = 0; i < counts.Length; i++)
         {
@@ -110,10 +121,10 @@ class ScoreRules()
         return false;
     }
 
-    private bool IsFKValid() // Four of a Kind -------
+    public bool IsFKValid() // Four of a Kind -------
     {
         if (usedFK) return false;
-        int[] counts = GetCount(dummy); // Count each die face
+        int[] counts = GetCount(holdingDice); // Count each die face
 
         for (int i = 0; i < counts.Length; i++)
         {
@@ -136,10 +147,10 @@ class ScoreRules()
         return false;
     }
 
-    private bool IsFHValid() // Full House -------
+    public bool IsFHValid() // Full House -------
     {
         if (usedFH) return false;
-        int[] counts = GetCount(dummy); // num on die
+        int[] counts = GetCount(holdingDice); // num on die
         bool hasThree = false;
         bool hasTwo = false;
 
@@ -168,7 +179,7 @@ class ScoreRules()
         return false;
     }
 
-    private bool IsSSValid() // Small Straight -------
+    public bool IsSSValid() // Small Straight -------
     {
         return (!usedSS) && HasStraight(4);
     }
@@ -183,7 +194,7 @@ class ScoreRules()
         return false;
     }
 
-    private bool IsLSValid() // Large Straight -------
+    public bool IsLSValid() // Large Straight -------
     {
         return (!usedLS) && HasStraight(5);
     }
@@ -198,13 +209,13 @@ class ScoreRules()
         return false;
     }
 
-    private bool IsYahtzeeValid()  // Yahtzee -------
+    public bool IsYahtzeeValid()  // Yahtzee -------
     {
         if (usedYahtzee) return false;
-        int first = dummy[0];
-        for (int i = 1; i < dummy.Length; i++)
+        int first = holdingDice[0];
+        for (int i = 1; i < holdingDice.Length; i++)
         {
-            if (dummy[i] != first) 
+            if (holdingDice[i] != first)
             {
                 return false;
             }
@@ -221,7 +232,7 @@ class ScoreRules()
         }
         return false;
     }
-    private bool IsChanceAvailable() //  Chance -------
+    public bool IsChanceAvailable() //  Chance -------
     {
         return !usedChance;
     }
@@ -236,4 +247,6 @@ class ScoreRules()
         return false;
     }
 }
-    
+
+// Lower Points Preview -----------------------------------------------
+

@@ -15,6 +15,10 @@ public class Dice
     private bool roll5;
 
     private int[] holding = new int[5];
+    public int[] holdingDice()
+    {
+        return holding;
+    }
         
     public void DiceMutator()
     {

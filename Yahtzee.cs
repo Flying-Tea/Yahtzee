@@ -3,23 +3,19 @@ using System.Threading;
 
 class Yahtzee
 {
+    Dice Roll = new Dice();
+    private ScoreRules rules;
+    private Scorecard scorecard;
     private int Score = 0;
     private int RoundCounter = 0;
-
+    public Yahtzee()
+    {
+        rules = new ScoreRules();
+        scorecard = new Scorecard(rules);
+    }
     private int SetScore()
     {
         return Score;
-    }
-    private void AddScoreIfTrue(bool condition, string message, int points)
-    {
-        if (condition)
-        {
-            Console.WriteLine($"{message} +{points} Points");
-        }
-    }
-    private void SetDice()
-    {
-        // calls dice, sets array of dice
     }
     private void DisplayRules()
     {
@@ -51,30 +47,22 @@ class Yahtzee
         
 
     }
-    private void Scorecard()
-    {
-        // display from scoring class just checks whats avaliable
-        // if true
-        // 
-
-    }
     public void Play()
     {
+        DisplayRules();
         while (true)
         {
             if (RoundCounter <= 13)
             {
-                DisplayRules();
-                SetDice();
 
-                // Chooses what you want to pick
-                // Sends it back to dice class
+                Roll.DiceMutator();
+                rules.SetDice(Roll.holdingDice());
+                scorecard.DisplayFullScorecard();
 
 
-                Scorecard();
                 RoundCounter++;
             }
-            if (RoundCounter == 14)
+            else
             {
                 break;
             }
