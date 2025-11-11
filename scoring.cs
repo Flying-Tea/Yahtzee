@@ -140,7 +140,7 @@ class Scoring()
             if (counts[i] >= 3)
             {
                 tKind = true;
-                return tkind;
+                return tKind;
             }
         }
 
@@ -162,7 +162,7 @@ class Scoring()
             if (counts[i] >= 4)
             {
                 fKind = true;
-                return fkind;
+                return fKind;
             }
         }
 
@@ -196,7 +196,7 @@ class Scoring()
         if (hasThree && hasTwo)
         {
             fHouse = true;
-            return fhouse;
+            return fHouse;
         }
 
         return false;
