@@ -4,17 +4,22 @@ class ScoreRules()
     // Category is already used, or if its not used + no match
     // Outputs true if not used + dice match 
 
-    private bool tKind = false;
-    private bool fKind = false;
-    private bool fHouse = false;
-    private bool smStraight = false;
-    private bool lgStraight = false;
-    private bool yahtzee = false;
-    private bool chance = false;
+    private bool usedTK = false;
+    private bool usedFK = false;
+    private bool usedFH = false;
+    private bool usedSS = false;
+    private bool usedLS = false;
+    private bool usedYahtzee = false;
+    private bool usedChance = false;
     private int scoring = 0;
 
-    private int[] dummy = new int[5];
+    private int[] dummy = new int[5]; // Dummy holding dice array
     private bool[] upperUsed = new bool[6]; // Marks whether respective upper is used
+
+    public void DisplayAvaliableScoring()
+    {
+        
+    }
 
     private static int[] GetCount(int[] holdingDice) // Counts the number of times a number appears
     {
@@ -53,46 +58,35 @@ class ScoreRules()
 
     public bool GetTK()
     {
-        int[] counts = new int[7]; // num on die
+        if (usedTK) return false;
+        int[] counts = GetCount(dummy); // Count each die face
 
-        // Count each die face
-        for (int i = 0; i < dummy.Length; i++)
+        for (int i = 0; i < counts.Length; i++)
         {
-            counts[dummy[i]]++;
-        }
-
-        // Check if any number appears 3 or more times
-        for (int i = 1; i <= 6; i++)
-        {
+            // Check if any number appears 3 or more times
             if (counts[i] >= 3)
             {
-                tKind = true;
-                return tKind;
+                usedTK = true;
+                return usedTK;
             }
         }
-
         return false;
     }
+
     public bool GetFK()
     {
-        int[] counts = new int[7]; // num on die
+        if (usedFK) return false;
+        int[] counts = GetCount(dummy); // Count each die face
 
-        // Count each die face
-        for (int i = 0; i < dummy.Length; i++)
+        for (int i = 0; i < counts.Length; i++)
         {
-            counts[dummy[i]]++;
-        }
-
-        // Check if any number appears 4 or more times
-        for (int i = 1; i <= 6; i++)
-        {
+            // Check if any number appears 4 or more times
             if (counts[i] >= 4)
             {
-                fKind = true;
-                return fKind;
+                usedFK = true;
+                return usedFK;
             }
         }
-
         return false;
     }
     public bool GetFH()
@@ -122,8 +116,8 @@ class ScoreRules()
 
         if (hasThree && hasTwo)
         {
-            fHouse = true;
-            return fHouse;
+            usedFH = true;
+            return usedFH;
         }
 
         return false;
@@ -152,8 +146,8 @@ class ScoreRules()
             // checks if num in the straight is missing
             if (!found)
             {
-                smStraight = true;
-                return smStraight;
+                usedSS = true;
+                return usedSS;
             }
         }
 
@@ -182,8 +176,8 @@ class ScoreRules()
         // checks if a num is missing
         if (!found)
         {
-            lgStraight = true;
-            return lgStraight;
+            usedLS = true;
+            return usedLS;
         }
     }
 
@@ -192,21 +186,22 @@ class ScoreRules()
 }
     public bool GetYahtzee()
     {
+        if (usedYahtzee) return false;
         int firstValue = dummy[0];
         for (int i = 1; i < dummy.Length; i++)
         {
             if (dummy[i] != firstValue)
             {
-                yahtzee = true;
-                return yahtzee;
+                return false;
             }
         }
+        usedYahtzee = true;
         return true;
     }
     public bool GetChance()
     {
-        chance = true;
-        return chance;
+        usedChance = true;
+        return usedChance;
     }
 }
     
