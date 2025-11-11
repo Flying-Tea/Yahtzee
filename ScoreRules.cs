@@ -27,6 +27,16 @@ class ScoreRules()
         this.holdingDice = holdingDice;
     }
 
+    private int SumOfHolding()
+    {
+        int sum = 0;
+        for (int i = 0; i < holdingDice.Length; i++)
+        {
+            sum += holdingDice[i];
+        }
+        return sum;
+    }
+
     private static int[] GetCount(int[] holdingDice) // Counts the number of times a number appears
     {
         int[] counts = new int[6]; // Each number represents their count 1-6
@@ -62,7 +72,6 @@ class ScoreRules()
         int[] counts = GetCount(holdingDice);
         return counts[upperValue - 1] * upperValue; // If outputs 0 that means that choice is invalid
     }
-
 
     public bool UseOne() => UseUpper(1);
     public bool UseTwo() => UseUpper(2);
@@ -246,7 +255,39 @@ class ScoreRules()
         }
         return false;
     }
-}
+    // Lower Points Preview -----------------------------------------------
 
-// Lower Points Preview -----------------------------------------------
+    public int PreviewTKPoints()
+    {
+        return IsTKValid() ? SumOfHolding() : 0; // This creates a type of if else statement. if true return SumOfHolding() else return 0
+    }
+    public int PreviewFKPoints()
+    {
+        return IsFKValid() ? SumOfHolding() : 0;
+    }
+    public int PreviewFHPoints()
+    {
+        return IsFHValid() ? 25 : 0;
+    }
+
+    public int PreviewSSPoints()
+    {
+        return IsSSValid() ? 30 : 0;
+    }
+
+    public int PreviewLSPoints()
+    {
+        return IsLSValid() ? 40 : 0;
+    }
+
+    public int PreviewYahtzeePoints()
+    {
+        return IsYahtzeeValid() ? 50 : 0;
+    }
+
+    public int PreviewChancePoints()
+    {
+        return IsChanceAvailable() ? SumOfHolding() : 0;
+    }
+}
 
