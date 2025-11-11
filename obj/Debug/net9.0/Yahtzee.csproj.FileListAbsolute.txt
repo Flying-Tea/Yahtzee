@@ -1,0 +1,15 @@
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\bin\Debug\net9.0\Yahtzee.exe
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\bin\Debug\net9.0\Yahtzee.deps.json
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\bin\Debug\net9.0\Yahtzee.runtimeconfig.json
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\bin\Debug\net9.0\Yahtzee.dll
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\bin\Debug\net9.0\Yahtzee.pdb
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\obj\Debug\net9.0\Yahtzee.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\obj\Debug\net9.0\Yahtzee.AssemblyInfoInputs.cache
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\obj\Debug\net9.0\Yahtzee.AssemblyInfo.cs
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\obj\Debug\net9.0\Yahtzee.csproj.CoreCompileInputs.cache
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\obj\Debug\net9.0\Yahtzee.sourcelink.json
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\obj\Debug\net9.0\Yahtzee.dll
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\obj\Debug\net9.0\refint\Yahtzee.dll
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\obj\Debug\net9.0\Yahtzee.pdb
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\obj\Debug\net9.0\Yahtzee.genruntimeconfig.cache
+C:\Users\User\OneDrive\Documents\GitHub\TypeScriptClass\Yahtzee\obj\Debug\net9.0\ref\Yahtzee.dll
