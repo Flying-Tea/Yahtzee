@@ -26,6 +26,7 @@ class Scoring()
     //upper
     public bool GetOne()
     {
+        //checks if array has a one
         for (int i = 0; i <= dummy.Length - 1; i++)
         {
             if (dummy[i] == 1)
@@ -41,6 +42,7 @@ class Scoring()
     }
     public bool GetTwo()
     {
+        //checks if array has a two
         for (int i = 0; i <= dummy.Length - 1; i++)
         {
             if (dummy[i] == 2)
@@ -56,6 +58,7 @@ class Scoring()
     }
     public bool GetThree()
     {
+        //checks if array has a three
         for (int i = 0; i <= dummy.Length - 1; i++)
         {
             if (dummy[i] == 3)
@@ -71,6 +74,7 @@ class Scoring()
     }
     public bool GetFour()
     {
+        //checks if array has a four
         for (int i = 0; i <= dummy.Length - 1; i++)
         {
             if (dummy[i] == 4)
@@ -86,6 +90,7 @@ class Scoring()
     }
     public bool GetFive()
     {
+        //checks if array has a five
         for (int i = 0; i <= dummy.Length - 1; i++)
         {
             if (dummy[i] == 5)
@@ -101,6 +106,7 @@ class Scoring()
     }
     public bool GetSix()
     {
+        //checks if array has a six
         for (int i = 0; i <= dummy.Length - 1; i++)
         {
             if (dummy[i] == 6)
@@ -122,7 +128,7 @@ class Scoring()
     {
         int[] counts = new int[7]; // num on die
 
-        // Count occurrences of each die face
+        // Count each die face
         for (int i = 0; i < dummy.Length; i++)
         {
             counts[dummy[i]]++;
@@ -144,7 +150,7 @@ class Scoring()
     {
         int[] counts = new int[7]; // num on die
 
-        // Count occurrences of each die face
+        // Count each die face
         for (int i = 0; i < dummy.Length; i++)
         {
             counts[dummy[i]]++;
@@ -168,7 +174,7 @@ class Scoring()
         bool hasThree = false;
         bool hasTwo = false;
 
-        // Count occurrences of each die face
+        // Count each die face
         for (int i = 0; i < dummy.Length; i++)
         {
             counts[dummy[i]]++;
@@ -197,15 +203,27 @@ class Scoring()
     }
 
 
-    //small straight get jackson's help
     public bool GetSS()
     {
-        HashSet<int> uniqueValues = new HashSet<int>(dummy);
         int[] straights = { 1, 2, 3, 4, 5 };
 
-        foreach (int num in straights)
+        
+        for (int i = 0; i < straights.Length; i++)
         {
-            if (!uniqueValues.Contains(num))
+            bool found = false;
+
+            // Check if num exists in array
+            for (int j = 0; j < dummy.Length; j++)
+            {
+                if (dummy[j] == straights[i])
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            // checks if num in the straight is missing
+            if (!found)
             {
                 smStraight = true;
                 return smStraight;
@@ -214,23 +232,37 @@ class Scoring()
 
         return false;
     }
-    //large straight get jackson's help
-    public bool GetLS()
-    {
-        HashSet<int> uniqueValues = new HashSet<int>(dummy);
-        int[] straights = { 2, 3, 4, 5, 6 };
 
-        foreach (int num in straights)
+    public bool GetLS()
+{
+    int[] straights = { 2, 3, 4, 5, 6 };
+
+    // checks all nums
+    for (int i = 0; i < straights.Length; i++)
+    {
+        bool found = false;
+
+        // Check if num exists in array
+        for (int j = 0; j < dummy.Length; j++)
         {
-            if (!uniqueValues.Contains(num))
+            if (dummy[j] == straights[i])
             {
-                lgStraight = true;
-                return lgStraight;
+                found = true;
+                break;
             }
         }
 
-        return false;
+        // checks if a num is missing
+        if (!found)
+        {
+            lgStraight = true;
+            return lgStraight;
+        }
     }
+
+
+    return false;
+}
     public bool GetYahtzee()
     {
         int firstValue = dummy[0];
