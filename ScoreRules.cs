@@ -1,12 +1,8 @@
 class ScoreRules()
 {
-
-    private bool one = false;
-    private bool two = false;
-    private bool three = false;
-    private bool four = false;
-    private bool five = false;
-    private bool six = false;
+    // VERY IMPORTANT IT OUTPUTS FALSE WHENEVER: (For future reference)
+    // Category is already used, or if its not used + no match
+    // Outputs true if not used + dice match 
 
     private bool tKind = false;
     private bool fKind = false;
@@ -18,109 +14,42 @@ class ScoreRules()
     private int scoring = 0;
 
     private int[] dummy = new int[5];
+    private bool[] upperUsed = new bool[6]; // Marks whether respective upper is used
 
-
-    //-----------------------------------------------
-    //upper
-    public bool GetOne()
+    private static int[] GetCount(int[] holdingDice) // Counts the number of times a number appears
     {
-        //checks if array has a one
-        for (int i = 0; i <= dummy.Length - 1; i++)
+        int[] counts = new int[6]; // Each number represents their count 1-6
+        for (int i = 0; i < holdingDice.Length; i++)
         {
-            if (dummy[i] == 1)
-            {
-                if (one == false)
-                {
-                    one = true;
-                    return one;
-                }
-            }
+            counts[holdingDice[i] - 1]++;
         }
-        return false;
-    }
-    public bool GetTwo()
-    {
-        //checks if array has a two
-        for (int i = 0; i <= dummy.Length - 1; i++)
-        {
-            if (dummy[i] == 2)
-            {
-                if (two == false)
-                {
-                    two = true;
-                    return two;
-                }
-            }
-        }
-        return false;
-    }
-    public bool GetThree()
-    {
-        //checks if array has a three
-        for (int i = 0; i <= dummy.Length - 1; i++)
-        {
-            if (dummy[i] == 3)
-            {
-                if (three == false)
-                {
-                    three = true;
-                    return three;
-                }
-            }
-        }
-        return false;
-    }
-    public bool GetFour()
-    {
-        //checks if array has a four
-        for (int i = 0; i <= dummy.Length - 1; i++)
-        {
-            if (dummy[i] == 4)
-            {
-                if (four == false)
-                {
-                    four = true;
-                    return four;
-                }
-            }
-        }
-        return false;
-    }
-    public bool GetFive()
-    {
-        //checks if array has a five
-        for (int i = 0; i <= dummy.Length - 1; i++)
-        {
-            if (dummy[i] == 5)
-            {
-                if (five == false)
-                {
-                    five = true;
-                    return five;
-                }
-            }
-        }
-        return false;
-    }
-    public bool GetSix()
-    {
-        //checks if array has a six
-        for (int i = 0; i <= dummy.Length - 1; i++)
-        {
-            if (dummy[i] == 6)
-            {
-                if (six == false)
-                {
-                    six = true;
-                    return six;
-                }
-            }
-        }
-        return false;
+        return counts;
     }
 
-    //-----------------------------------------------
-    //lower 
+    // Upper -----------------------------------------------
+
+    private bool ScoreUpper(int upperValue)
+    {
+        int upperIndex = upperValue - 1;
+        int[] counts = GetCount(dummy);
+        if (upperUsed[upperIndex]) return false; // Used
+
+        if (counts[upperIndex] > 0)
+        {
+            upperUsed[upperIndex] = true; // Mark as scored
+            return true;
+        }
+        return false;
+    }
+    public bool GetOne() => ScoreUpper(1);
+    public bool GetTwo() => ScoreUpper(2);
+    public bool GetThree() => ScoreUpper(3);
+    public bool GetFour() => ScoreUpper(4);
+    public bool GetFive() => ScoreUpper(5);
+    public bool GetSix() => ScoreUpper(6);
+
+
+    // Lower -----------------------------------------------
 
     public bool GetTK()
     {

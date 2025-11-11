@@ -10,6 +10,13 @@ class Yahtzee
     {
         return Score;
     }
+    private void AddScoreIfTrue(bool condition, string message, int points)
+    {
+        if (condition)
+        {
+            Console.WriteLine($"{message} +{points} Points");
+        }
+    }
     private void SetDice()
     {
         // calls dice, sets array of dice
