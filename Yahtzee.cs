@@ -1,6 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-
 class Yahtzee
 {
     Dice Roll = new Dice();
