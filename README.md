@@ -1,6 +1,6 @@
 # Yahtzee
 
-This is the game **Yahtzee** built as a short team project written in **C#** for a school project. Play against yourself, roll dice, and score points according to the Yahtzee rules.
+This is the game **Yahtzee** built as a short team project written in **C#** for a school project. Play against yourself, roll dice, and score points according to the Yahtzee rules which is provided upon running.
 
 # Features
 
