@@ -13,10 +13,6 @@ class Yahtzee
         rules = new ScoreRules();
         scorecard = new Scorecard(rules);
     }
-    private int SetScore()
-    {
-        return Score;
-    }
     private void DisplayRules()
     {
         Console.WriteLine("Welcome to Yahtzee, in this game you will roll 5 dices");
@@ -43,35 +39,67 @@ class Yahtzee
         Thread.Sleep(500);
         Console.WriteLine("Chance: You can put anything into chance. Scores the sum of the dice.");
         Thread.Sleep(500);
-        Console.WriteLine("YAHTZEE: Five of a kind. Scores 50 points. Each additional Yahtzee scores 100 extra points."); 
+        Console.WriteLine("YAHTZEE: Five of a kind. Scores 50 points."); 
         
 
     }
     public void Play()
     {
         DisplayRules();
-        while (true)
+        while (RoundCounter < 13)
         {
-            if (RoundCounter <= 13)
-            {
+            Console.WriteLine($"\n--- Round {RoundCounter + 1} ---");
+            Roll.DiceMutator();
+            rules.SetDice(Roll.GetHoldRoll());
+            scorecard.DisplayFullScorecard();
+            HandleUserSelection();
 
-                Roll.DiceMutator();
-                rules.SetDice(Roll.GetHoldRoll());
-                scorecard.DisplayFullScorecard();
-
-
-                RoundCounter++;
-            }
-            else
-            {
-                break;
-            }
+            RoundCounter++;
         }
-
+        Console.WriteLine("\nGame Over!");
+        Console.WriteLine($"Final Score: {Score}");
     }
 
     private void HandleUserSelection()
     {
-        Console.WriteLine("Select a category (e.g., 'Upper 1', 'TK', 'FK', 'FH', 'SS', 'LS', 'Chance', 'Yahtzee'):");
+        int points = 0;
+        bool validChoice = false;
+        while (!validChoice)
+        {
+            Console.WriteLine("Select a category (e.g., '1', '2', 'TK', 'FK', 'FH', 'SS', 'LS', 'Chance', 'Yahtzee'):");
+            string choice = Console.ReadLine().Trim().ToUpper();
+
+            switch (choice)
+            {
+                case "1": points = scorecard.SelectUpper(1); break;
+                case "2": points = scorecard.SelectUpper(2); break;
+                case "3": points = scorecard.SelectUpper(3); break;
+                case "4": points = scorecard.SelectUpper(4); break;
+                case "5": points = scorecard.SelectUpper(5); break;
+                case "6": points = scorecard.SelectUpper(6); break;
+                case "TK": points = scorecard.SelectTK(); break;
+                case "FK": points = scorecard.SelectFK(); break;
+                case "FH": points = scorecard.SelectFH(); break;
+                case "SS": points = scorecard.SelectSS(); break;
+                case "LS": points = scorecard.SelectLS(); break;
+                case "CHANCE": points = scorecard.SelectChance(); break;
+                case "YAHTZEE": points = scorecard.SelectYahtzee(); break;
+                default:
+                    Console.WriteLine("Invalid choice. Try again.");
+                    points = -1; // retry
+                    break;
+            }
+
+            if (points >= 0) // valid or forfeited
+            {
+                validChoice = true;
+                Score += points;
+                Console.WriteLine($"You scored {points} points this round. Total score: {Score}");
+            }
+            else
+            {
+                Console.WriteLine("That category is already used. Pick another.");
+            }
+        }
     }
 }

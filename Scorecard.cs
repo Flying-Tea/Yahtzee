@@ -12,14 +12,14 @@ class Scorecard
     {
         if (isUsed) return "Used";
         if (isValid) return "Possible";
-        return "Not possible";
+        return "Forfeit?";
     }
 
     public void DisplayFullScorecard()
     {
         Console.WriteLine("----- YAHTZEE SCORECARD -----");
         Console.WriteLine("UPPER SECTION:");
-        Console.WriteLine("Cat | Points  | Status");
+        Console.WriteLine("Category | Points  | Status");
 
         for (int i = 1; i <= 6; i++)
         {
@@ -54,7 +54,7 @@ class Scorecard
         string lsStatus = GetStatus(rules.GetIsLSUsed(), rules.IsLSValid());
         int lsDisplay = rules.GetIsLSUsed() ? lsScore : rules.IsLSValid() ? rules.PreviewLSPoints() : 0;
 
-        string chStatus = rules.GetIsChanceUsed() ? "Used" : "Possible"; // Chance always possible if unused
+        string chStatus = GetStatus(rules.GetIsChanceUsed(), rules.IsChanceAvailable());
         int chDisplay = rules.GetIsChanceUsed() ? chanceScore : rules.PreviewChancePoints();
 
         string yaStatus = GetStatus(rules.GetIsYahtzeeUsed(), rules.IsYahtzeeValid());
@@ -78,28 +78,14 @@ class Scorecard
     public int SelectUpper(int upperValue)
     {
         int finalPoints = rules.PreviewPointsUpper(upperValue);
-        bool used = false;
-        switch (upperValue)
+        if (rules.UseUpper(upperValue))
         {
-            case 1: used = rules.UseOne(); break;
-            case 2: used = rules.UseTwo(); break;   
-            case 3: used = rules.UseThree(); break;
-            case 4: used = rules.UseFour(); break;
-            case 5: used = rules.UseFive(); break;
-            case 6: used = rules.UseSix(); break;
-            default: Console.WriteLine("Invalid upper category"); return 0;
-        }
-
-        if (used)
-        {
+            upperScores[upperValue - 1] = finalPoints;
             Console.WriteLine($"Selected Upper {upperValue}: {finalPoints} points (finalized)");
             return finalPoints;
         }
-        else
-        {
-            Console.WriteLine($"Cannot select Upper {upperValue}: already used or invalid. (Preview was {finalPoints})");
-            return 0;
-        }
+        Console.WriteLine($"Cannot select Upper {upperValue}: already used.");
+        return -1;
     }
 
     public int SelectTK()
@@ -107,11 +93,12 @@ class Scorecard
         int finalPoints = rules.PreviewTKPoints();
         if (rules.UseTK())
         {
+            tkScore = finalPoints;
             Console.WriteLine($"Selected Three of a Kind: {finalPoints} points (finalized)");
             return finalPoints;
         }
-        Console.WriteLine("Cannot select Three of a Kind: already used or invalid.");
-        return 0;
+        Console.WriteLine("Cannot select Three of a Kind: already used.");
+        return -1;
     }
 
     public int SelectFK()
@@ -119,11 +106,12 @@ class Scorecard
         int finalPoints = rules.PreviewFKPoints();
         if (rules.UseFK())
         {
+            fkScore = finalPoints;
             Console.WriteLine($"Selected Four of a Kind: {finalPoints} points (finalized)");
             return finalPoints;
         }
-        Console.WriteLine("Cannot select Four of a Kind: already used or invalid.");
-        return 0;
+        Console.WriteLine("Cannot select Four of a Kind: already used.");
+        return -1;
     }
 
     public int SelectFH()
@@ -131,11 +119,12 @@ class Scorecard
         int finalPoints = rules.PreviewFHPoints();
         if (rules.UseFH())
         {
+            fhScore = finalPoints;
             Console.WriteLine($"Selected Full House: {finalPoints} points (finalized)");
             return finalPoints;
         }
-        Console.WriteLine("Cannot select Full House: already used or invalid.");
-        return 0;
+        Console.WriteLine("Cannot select Full House: already used.");
+        return -1;
     }
 
     public int SelectSS()
@@ -143,11 +132,12 @@ class Scorecard
         int finalPoints = rules.PreviewSSPoints();
         if (rules.UseSS())
         {
+            ssScore = finalPoints;
             Console.WriteLine($"Selected Small Straight: {finalPoints} points (finalized)");
             return finalPoints;
         }
-        Console.WriteLine("Cannot select Small Straight: already used or invalid.");
-        return 0;
+        Console.WriteLine("Cannot select Small Straight: already used.");
+        return -1;
     }
 
     public int SelectLS()
@@ -155,11 +145,12 @@ class Scorecard
         int finalPoints = rules.PreviewLSPoints();
         if (rules.UseLS())
         {
+            lsScore = finalPoints;
             Console.WriteLine($"Selected Large Straight: {finalPoints} points (finalized)");
             return finalPoints;
         }
-        Console.WriteLine("Cannot select Large Straight: already used or invalid.");
-        return 0;
+        Console.WriteLine("Cannot select Large Straight: already used.");
+        return -1;
     }
 
     public int SelectChance()
@@ -167,11 +158,12 @@ class Scorecard
         int finalPoints = rules.PreviewChancePoints();
         if (rules.UseChance())
         {
+            chanceScore = finalPoints;
             Console.WriteLine($"Selected Chance: {finalPoints} points (finalized)");
             return finalPoints;
         }
         Console.WriteLine("Cannot select Chance: already used.");
-        return 0;
+        return -1;
     }
 
     public int SelectYahtzee()
@@ -179,11 +171,11 @@ class Scorecard
         int finalPoints = rules.PreviewYahtzeePoints();
         if (rules.UseYahtzee())
         {
+            yahtzeeScore = finalPoints;
             Console.WriteLine($"Selected Yahtzee: {finalPoints} points (finalized)");
             return finalPoints;
         }
-        Console.WriteLine("Cannot select Yahtzee: already used or invalid.");
-        return 0;
+        Console.WriteLine("Cannot select Yahtzee: already used.");
+        return -1;
     }
-
 }

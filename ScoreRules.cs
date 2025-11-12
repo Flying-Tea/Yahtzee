@@ -1,8 +1,8 @@
-class ScoreRules()
+class ScoreRules
 {
-    // VERY IMPORTANT IT OUTPUTS FALSE WHENEVER: (For future reference)
+    // VERY IMPORTANT: (For future reference)
     // Category is already used, or if its not used + no match
-    // Outputs true if not used + dice match 
+    // Outputs true if not used + dice match
 
     private bool usedTK = false;
     private bool usedFK = false;
@@ -59,9 +59,9 @@ class ScoreRules()
         return false;
     }
 
-    private bool UseUpper(int upperValue) // Use respective value when called
+    public bool UseUpper(int upperValue) // Use respective value when called
     {
-        if (IsUpperValid(upperValue))
+        if (!upperUsed[upperValue - 1])
         {
             upperUsed[upperValue - 1] = true;
             return true;
@@ -105,7 +105,7 @@ class ScoreRules()
         return false;
     }
 
-    public bool IsTKValid() // Four of a Kind -------
+    public bool IsTKValid() // Three of a Kind -------
     {
         if (usedTK) return false;
         int[] counts = GetCount(holdingDice); // Count each die face
@@ -123,7 +123,7 @@ class ScoreRules()
 
     public bool UseTK()
     {
-        if (IsTKValid())
+        if (!usedTK)
         {
             usedTK = true;
             return true;
@@ -149,7 +149,7 @@ class ScoreRules()
 
     public bool UseFK()
     {
-        if (IsFKValid())
+        if (!usedFK)
         {
             usedFK = true;
             return true;
@@ -181,7 +181,7 @@ class ScoreRules()
 
     public bool UseFH()
     {
-        if (IsFHValid())
+        if (!usedFH)
         {
             usedFH = true;
             return true;
@@ -196,7 +196,7 @@ class ScoreRules()
 
     public bool UseSS()
     {
-        if (IsSSValid())
+        if (!usedSS)
         {
             usedSS = true;
             return true;
@@ -211,7 +211,7 @@ class ScoreRules()
 
     public bool UseLS()
     {
-        if (IsLSValid())
+        if (!usedLS)
         {
             usedLS = true;
             return true;
@@ -235,7 +235,7 @@ class ScoreRules()
 
     public bool UseYahtzee()
     {
-        if (IsYahtzeeValid())
+        if (!usedYahtzee)
         {
             usedYahtzee = true;
             return true;
@@ -244,12 +244,20 @@ class ScoreRules()
     }
     public bool IsChanceAvailable() //  Chance -------
     {
-        return !usedChance;
+        if (usedChance) return false;
+
+        // Ensure all dice slots are filled (no zero values)
+        foreach (int die in holdingDice)
+        {
+            if (die == 0) return false;
+        }
+
+        return true;
     }
 
     public bool UseChance()
     {
-        if (IsChanceAvailable())
+        if (!usedChance)
         {
             usedChance = true;
             return true;
