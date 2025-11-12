@@ -20,9 +20,13 @@ This is the game **Yahtzee** built as a short team project written in **C#** for
 
 Clone Repository
 1. git clone https://github.com/Flying-Tea/Yahtzee.git
+
 Navigate to project folder
+
 2. cd Yahtzee (if outside file)
+
 Build and run the project in console
+
 3. dotnet run
 
 ## Contributors
