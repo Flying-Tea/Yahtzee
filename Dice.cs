@@ -15,57 +15,167 @@ public class Dice
     private bool roll5;
 
     private int[] holding = new int[5];
-    public int[] holdingDice()
-    {
-        return holding;
-    }
-        
-    public void DiceMutator()
+
+    int i = 0;
+    public void DiceMutator() // ⚀⚁⚂⚃⚄⚅
     {
         DieRoll();
 
-        for (int i = 0; i <= 3; i++)
+        while (i <= 2)
         {
+            if (roll1 == true) // If holding the text turns green
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"Die1:({die1}) ");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else Console.Write($"Die1:({die1}) ");
+
+            if (roll2 == true)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"Die2:({die2}) ");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else Console.Write($"Die2:({die2}) ");
+
+            if (roll3 == true)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"Die3:({die3}) ");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else Console.Write($"Die3:({die3}) ");
+
+            if (roll4 == true)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"Die4:({die4}) ");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else Console.Write($"Die4:({die4}) ");
+
+            if (roll5 == true)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"Die5:({die5}) ");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else Console.Write($"Die5:({die5}) ");
+
+            Console.WriteLine("");
+            Console.WriteLine("To hold enter 1. To unhold enter 2.");
+            Console.WriteLine("To reroll enter 3. To stop enter anything else.");
+
+
             string input = Console.ReadLine();
             int dieNumber;
 
-            if (int.TryParse(input, out dieNumber))
+            if (input == "1") // To hold die roll
             {
+                Console.WriteLine("From 0 - 4 enter in the number for the die you wish to hold.");
+                string holdInput = Console.ReadLine();
 
-                //diceArray[dieNumber - 1] = die{dieNumber};
-                if (input == "1")
+                if (int.TryParse(holdInput, out dieNumber))
                 {
-                    holding[dieNumber] = die1;
-                    roll1 = true;
+
+                    if (holdInput == "0")
+                    {
+                        holding[dieNumber] = die1;
+                        roll1 = true;
+                    }
+                    else if (holdInput == "1")
+                    {
+                        holding[dieNumber] = die2;
+                        roll2 = true;
+                    }
+                    else if (holdInput == "2")
+                    {
+                        holding[dieNumber] = die3;
+                        roll3 = true;
+                    }
+                    else if (holdInput == "3")
+                    {
+                        holding[dieNumber] = die4;
+                        roll4 = true;
+                    }
+                    else if (holdInput == "4")
+                    {
+                        holding[dieNumber] = die5;
+                        roll5 = true;
+                    }
                 }
-                else if (input == "2")
+                else
                 {
-                    holding[dieNumber] = die2;
-                    roll2 = true;
+                    Console.WriteLine("Enter in a die you wish to hold.");
                 }
-                else if (input == "3")
+
+            }
+
+            else if (input == "2") // This is to stop holding dice
+            {
+                Console.WriteLine("From 0 - 4 enter in the number for the die you wish to stop holding.");
+                string holdInput = Console.ReadLine();
+
+                if (int.TryParse(holdInput, out dieNumber))
                 {
-                    holding[dieNumber] = die3;
-                    roll3 = true;
+
+                    if (holdInput == "0")
+                    {
+                        roll1 = false;
+                    }
+                    else if (holdInput == "1")
+                    {
+                        roll2 = false;
+                    }
+                    else if (holdInput == "2")
+                    {
+                        roll3 = false;
+                    }
+                    else if (holdInput == "3")
+                    {
+                        roll4 = false;
+                    }
+                    else if (holdInput == "4")
+                    {
+                        roll5 = false;
+                    }
                 }
-                else if (input == "4")
+                else
                 {
-                    holding[dieNumber] = die4;
-                    roll4 = true;
-                }
-                else if (input == "5")
-                {
-                    holding[dieNumber] = die5;
-                    roll5 = true;
+                    Console.WriteLine("Enter in a die you wish to stop holding.");
                 }
             }
-            else if (input == "R")
+
+            else if (input == "3")
             {
-                DieRoll();
+                i += 1;
+
+                if (i == 3)
+                {
+                    Console.WriteLine("That's 3 rolls!");
+                    holding[0] = die1;
+                    holding[1] = die2;
+                    holding[2] = die3;
+                    holding[3] = die4;
+                    holding[4] = die5;
+                    Console.WriteLine("Your rolls:");
+                    Console.WriteLine($"{holding[0]} {holding[1]} {holding[2]} {holding[3]} {holding[4]}");
+                    break;
+                }
+                else
+                {
+                    DieRoll();
+                }
             }
-            else
+            else // Final Dice
             {
-                Console.WriteLine("You stop running.");
+                Console.WriteLine("Your rolls:");
+                holding[0] = die1;
+                holding[1] = die2;
+                holding[2] = die3;
+                holding[3] = die4;
+                holding[4] = die5;
                 Console.WriteLine($"{holding[0]} {holding[1]} {holding[2]} {holding[3]} {holding[4]}");
                 break;
             }
@@ -79,29 +189,27 @@ public class Dice
         {
             die1 = r.Next(1, 7);
         }
-        else if (roll2 == false)
+        if (roll2 == false)
         {
             die2 = r.Next(1, 7);
         }
-        else if (roll3 == false)
+        if (roll3 == false)
         {
             die3 = r.Next(1, 7);
         }
-        else if (roll4 == false)
+        if (roll4 == false)
         {
             die4 = r.Next(1, 7);
         }
-        else if (roll5 == false)
+        if (roll5 == false)
         {
             die5 = r.Next(1, 7);
         }
         
-
-        Console.WriteLine($"Die 1: {die1} Die 2: {die2} Die 3: {die3} Die 4: {die4} Die 5: {die5}");
-        Console.WriteLine($"Press 1 - 5 to hold their die. To reroll enter R. To stop enter S");
     }
     public int[] GetHoldRoll()
     {
         return holding;
     }
+      
 }

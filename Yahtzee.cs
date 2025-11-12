@@ -56,7 +56,7 @@ class Yahtzee
             {
 
                 Roll.DiceMutator();
-                rules.SetDice(Roll.holdingDice());
+                rules.SetDice(Roll.GetHoldRoll());
                 scorecard.DisplayFullScorecard();
 
 
@@ -68,5 +68,10 @@ class Yahtzee
             }
         }
 
+    }
+
+    private void HandleUserSelection()
+    {
+        Console.WriteLine("Select a category (e.g., 'Upper 1', 'TK', 'FK', 'FH', 'SS', 'LS', 'Chance', 'Yahtzee'):");
     }
 }

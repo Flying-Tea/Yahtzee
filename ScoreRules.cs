@@ -21,6 +21,7 @@ class ScoreRules()
 
     private int[] holdingDice = new int[5]; // holdingDice holding dice array
     private bool[] upperUsed = new bool[6]; // Marks whether respective upper is used
+    public bool GetIsUpperUsed(int upperValue) => upperUsed[upperValue - 1];
 
     public void SetDice(int[] holdingDice)
     {
