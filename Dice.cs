@@ -6,11 +6,21 @@ public class Dice
     private bool[] held = new bool[5]; // whether each die is held
     private int[] holding = new int[5]; // final values after stop
     private int rollCount = 0;
-
-    public void DiceMutator() // ⚀⚁⚂⚃⚄⚅
+    private void ResetDice() // Reset held state and dice at the start of each round
     {
         rollCount = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            held[i] = false;
+            dice[i] = 0;
+            holding[i] = 0;
+        }
+    }
+    public void DiceMutator() // ⚀⚁⚂⚃⚄⚅
+    {
+        ResetDice();
         DieRoll();
+
 
         while (rollCount < 3)
         {

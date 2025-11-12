@@ -19,7 +19,7 @@ class Yahtzee
         Thread.Sleep(500);
         Console.WriteLine("With those 5 dices you try to aqcuire the highest score possible\n");
         Thread.Sleep(500);
-        Console.WriteLine("YOu will have 3 re rolls, you're able to pick up whatever dice you want");
+        Console.WriteLine("You will have 3 re-rolls, you're able to pick up whatever dice you want");
         Thread.Sleep(500);
         Console.WriteLine("But once a dice is picked up, it cannot be re rolled, choose wisely\n");
         Thread.Sleep(500);
@@ -40,8 +40,6 @@ class Yahtzee
         Console.WriteLine("Chance: You can put anything into chance. Scores the sum of the dice.");
         Thread.Sleep(500);
         Console.WriteLine("YAHTZEE: Five of a kind. Scores 50 points."); 
-        
-
     }
     public void Play()
     {
@@ -66,7 +64,8 @@ class Yahtzee
         bool validChoice = false;
         while (!validChoice)
         {
-            Console.WriteLine("Select a category (e.g., '1', '2', 'TK', 'FK', 'FH', 'SS', 'LS', 'Chance', 'Yahtzee'):");
+            Console.WriteLine("Select a category (e.g., '1', '2', 'TK', 'FK', 'FH', 'SS', 'LS', 'CH', 'YA'):");
+            Console.WriteLine(string.Join(" ", Roll.GetHoldRoll()));
             string choice = Console.ReadLine().Trim().ToUpper();
 
             switch (choice)
@@ -82,8 +81,8 @@ class Yahtzee
                 case "FH": points = scorecard.SelectFH(); break;
                 case "SS": points = scorecard.SelectSS(); break;
                 case "LS": points = scorecard.SelectLS(); break;
-                case "CHANCE": points = scorecard.SelectChance(); break;
-                case "YAHTZEE": points = scorecard.SelectYahtzee(); break;
+                case "CH": points = scorecard.SelectChance(); break;
+                case "YA": points = scorecard.SelectYahtzee(); break;
                 default:
                     Console.WriteLine("Invalid choice. Try again.");
                     points = -1; // retry
