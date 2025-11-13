@@ -1,6 +1,7 @@
 class Scorecard
 {
     private ScoreRules rules;
+    private int upperBonusScore = 0;
     private int[] upperScores = new int[6];
     private int tkScore, fkScore, fhScore, ssScore, lsScore, chanceScore, yahtzeeScore;
     public Scorecard(ScoreRules rules)
@@ -37,6 +38,9 @@ class Scorecard
             string status = GetStatus(rules.GetIsUpperUsed(i), preview > 0);
             Console.WriteLine($"{i} - {name,-6} | {displayPoints,-7} | {status}");
         }
+        Console.WriteLine("-----------------------------");
+        Console.WriteLine("UPPER BONUS:");
+        Console.WriteLine($"Bonus Points | {upperBonusScore,-7} | {(upperBonusScore > 0 ? "Achieved" : "Not yet")}");
 
         // Lower section
         string tkStatus = GetStatus(rules.GetIsTKUsed(), rules.IsTKValid());
@@ -82,11 +86,28 @@ class Scorecard
         {
             upperScores[upperValue - 1] = finalPoints;
             Console.WriteLine($"Selected Upper {upperValue}: {finalPoints} points (finalized)");
+
+            CheckUpperBonus();
             return finalPoints;
         }
         Console.WriteLine($"Cannot select Upper {upperValue}: already used.");
         return -1;
     }
+
+    private void CheckUpperBonus()
+    {
+        int totalUpper = 0;
+        for (int i = 0; i < upperScores.Length; i++)
+        {
+            totalUpper += upperScores[i];
+        }
+        if (totalUpper >= 63 && upperBonusScore == 0)
+        {
+            upperBonusScore = 35;
+        }
+    }
+
+    public int GetUpperBonus() => upperBonusScore;
 
     public int SelectTK()
     {

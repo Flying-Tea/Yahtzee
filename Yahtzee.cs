@@ -5,6 +5,7 @@ class Yahtzee
     private Scorecard scorecard;
     private int Score = 0;
     private int RoundCounter = 0;
+    private bool isBonusAdded = false;
     public Yahtzee()
     {
         rules = new ScoreRules();
@@ -18,11 +19,15 @@ class Yahtzee
         Thread.Sleep(500);
         Console.WriteLine("You will have 3 re-rolls, you're able to pick up whatever dice you want");
         Thread.Sleep(500);
-        Console.WriteLine("But once a dice is picked up, it cannot be re rolled, choose wisely\n");
+        Console.WriteLine("You can hold and unhold dice, but held dice only persist for one round\n");
         Thread.Sleep(500);
         Console.WriteLine("This game consists of 13 rounds, or until theres no more options to be chosen");
         Thread.Sleep(1500);
-        Console.WriteLine("Scoring in this game is a bit challenging");
+        Console.WriteLine("Scoring in this game is a bit challenging, you can only score each type once");
+        Thread.Sleep(500);
+        Console.WriteLine("Upper: You can score any of the same number and recieve their sum as the score");
+        Thread.Sleep(500);
+        Console.WriteLine("Upper Bonus: Once you achieve 63+ points in upper you get a bonus of 35 points");
         Thread.Sleep(500);
         Console.WriteLine("3 Of a kind: Get three dices with the same number, scores the sum of the dice");
         Thread.Sleep(500);
@@ -30,13 +35,13 @@ class Yahtzee
         Thread.Sleep(500);
         Console.WriteLine("Full house: Get three dices with the same number and a pair (2 of the same), scores 25");
         Thread.Sleep(500);
-        Console.WriteLine("Small Straight: Get four sequential dice. Scores 30 points.");
+        Console.WriteLine("Small Straight: Get four sequential dice. Scores 30 points");
         Thread.Sleep(500);
-        Console.WriteLine("Large Straight: Get five sequential dice. Scores 40 points.");
+        Console.WriteLine("Large Straight: Get five sequential dice. Scores 40 points");
         Thread.Sleep(500);
-        Console.WriteLine("Chance: You can put anything into chance. Scores the sum of the dice.");
+        Console.WriteLine("Chance: You can put anything into chance. Scores the sum of the dice");
         Thread.Sleep(500);
-        Console.WriteLine("YAHTZEE: Five of a kind. Scores 50 points."); 
+        Console.WriteLine("YAHTZEE: Five of a kind. Scores 50 points"); 
     }
     public void Play()
     {
@@ -89,6 +94,12 @@ class Yahtzee
             if (points >= 0) // valid or forfeited
             {
                 validChoice = true;
+                if (scorecard.GetUpperBonus() > 0 && !isBonusAdded)
+                {
+                    points += scorecard.GetUpperBonus();
+                    isBonusAdded = true;
+                    Console.WriteLine("Upper section bonus score achieved! +35 points");
+                }
                 Score += points;
                 Console.WriteLine($"You scored {points} points this round. Total score: {Score}");
             }
